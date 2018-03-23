@@ -1,0 +1,71 @@
+{
+  "name": "my-collection",
+  "version": "0.0.1",
+  "description": "Database for all of you collectible media items. (Video Games, Music, Movies, Books)",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "typed": "flow-typed install",
+    "flow:precommit": "flow; test $? -eq 1 -o $? -eq 2 && exit 1 || exit 0",
+    "test": "jest --runInBand --coverage --no-cache --forceExit"
+  },
+  "precommit.silent": true,
+  "pre-commit": [
+    "flow:precommit"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/9029jonesj/My-Collection.git"
+  },
+  "jest": {
+    "preset": "react-native",
+    "collectCoverage": true,
+    "coverageDirectory": "__coverage__",
+    "testRegex": "./__tests__/[^setup].*.js$",
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|native-base|react-navigation|react-native-fabric)"
+    ],
+    "setupFiles": [
+      "./__tests__/setup.js"
+    ]
+  },
+  "keywords": [
+    "collections",
+    "store",
+    "database",
+    "video",
+    "games",
+    "vinyl",
+    "music",
+    "cds",
+    "books",
+    "collect"
+  ],
+  "author": "Jerrell Jones",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/9029jonesj/My-Collection/issues"
+  },
+  "homepage": "https://github.com/9029jonesj/My-Collection#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "flow-bin": "^0.68.0",
+    "flow-typed": "^2.4.0",
+    "jest": "^22.4.3",
+    "jest-cli": "^22.4.3",
+    "lodash": "^4.17.5",
+    "pre-commit": "^1.2.2",
+    "ramda": "^0.25.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-native": "^0.54.2",
+    "react-native-fabric": "^0.5.1",
+    "react-scripts": "^1.1.1",
+    "uuid": "^3.2.1"
+  }
+}
