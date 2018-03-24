@@ -46,8 +46,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Other Files
-/Server/node_modules
+# Other Folders
+/Server/node_modules/
 /Server/__coverage__/
 /Server/coverage/
 /Server/flow-typed/

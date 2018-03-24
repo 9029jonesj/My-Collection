@@ -21,12 +21,8 @@
     "preset": "react-native",
     "collectCoverage": true,
     "coverageDirectory": "__coverage__",
-    "testRegex": "./__tests__/[^setup].*.js$",
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|native-base|react-navigation|react-native-fabric)"
-    ],
-    "setupFiles": [
-      "./__tests__/setup.js"
     ]
   },
   "keywords": [
