@@ -2,9 +2,10 @@
   "name": "my-collection",
   "version": "0.0.1",
   "description": "Database for all of you collectible media items. (Video Games, Music, Movies, Books)",
-  "main": "index.js",
+  "main": "app.js",
   "private": true,
   "scripts": {
+    "start": "babel-node --presets es2015 app.js",
     "typed": "flow-typed install",
     "flow:precommit": "flow; test $? -eq 1 -o $? -eq 2 && exit 1 || exit 0",
     "test": "jest --runInBand --coverage --no-cache --forceExit"
@@ -52,6 +53,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "flow-bin": "^0.68.0",
     "flow-typed": "^2.4.0",
+    "hapi": "^17.2.3",
     "jest": "^22.4.3",
     "jest-cli": "^22.4.3",
     "lodash": "^4.17.5",
