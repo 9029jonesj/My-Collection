@@ -53,7 +53,7 @@ export const createVideoGame = (videoGameFields: VideoGameFields): ? VideoGame =
 };
 
 export const updateId = (videoGame: VideoGame): VideoGame =>
-  validators.isObject(videoGame) ?
+validators.isObject(videoGame) ?
   Object.freeze({
     ...videoGame,
     id: v1()
@@ -61,7 +61,7 @@ export const updateId = (videoGame: VideoGame): VideoGame =>
   videoGame;
 
 export const updateRating = (videoGame: VideoGame, rating: number): VideoGame =>
-  validators.isObject(videoGame) ?
+validators.isObject(videoGame) && validators.withinRange(rating) ?
   Object.freeze({
     ...videoGame,
     rating

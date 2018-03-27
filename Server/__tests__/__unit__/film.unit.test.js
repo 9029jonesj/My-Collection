@@ -51,10 +51,11 @@ it('Film Rating Update -- Error', () => {
     productionCompany: "Marvel Studios",
     distributor: "Walt Disney Motion Pictures",
     format: "Blu-ray",
-    year: "2018"
+    year: 2018
   });
-  const updateFilm = filmService.updateRating(film, 5);
-  expect(updateFilm).toBeNull();
+  const updateFilm = filmService.updateRating(film, 6);
+  expect(updateFilm.rating).toBe(film.rating);
+  expect(updateFilm).toBeTruthy();
 });
 
 it('Film ID Update', () => {

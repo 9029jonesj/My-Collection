@@ -46,11 +46,12 @@ it('Book Rating Update -- Error', () => {
     author: "Jen Sincero",
     genre: "Self-help",
     publisher: "Running Press Book Publishers",
-    isbn: "9780762447695",
+    isbn: 9780762447695,
     year: 2013
   });
-  const updateBook = bookService.updateRating(book, 5);
-  expect(updateBook).toBeNull();
+  const updateBook = bookService.updateRating(book, 6);
+  expect(updateBook.rating).toBe(book.rating);
+  expect(updateBook).toBeTruthy();
 });
 
 it('Book ID Update', () => {

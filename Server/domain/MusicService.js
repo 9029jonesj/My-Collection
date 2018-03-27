@@ -52,7 +52,7 @@ export const createMusic = (musicFields: MusicFields): ? Music => {
 };
 
 export const updateRating = (music: Music, rating: number): Music =>
-  validators.isObject(music) ?
+validators.isObject(music) && validators.withinRange(rating) ?
   Object.freeze({
     ...music,
     rating

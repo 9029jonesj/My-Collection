@@ -52,7 +52,7 @@ export const createBook = (bookFields: BookFields): ? Book => {
 };
 
 export const updateRating = (book: Book, rating: number): Book =>
-  validators.isObject(book) ?
+validators.isObject(book) && validators.withinRange(rating) ?
   Object.freeze({
     ...book,
     rating

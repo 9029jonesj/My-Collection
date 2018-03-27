@@ -44,13 +44,14 @@ it('Video Game Rating Update -- Error', () => {
   const videoGame = videoGameService.createVideoGame({
     title: "Tekken 3",
     developer: "Namco",
-    genre: "Fighting",
+    genre: ["Fighting"],
     format: "NSTC",
     system: "PS2",
     year: 1998
   });
-  const updateVideoGame = videoGameService.updateRating(videoGame, 5);
-  expect(updateVideoGame).toBeNull();
+  const updateVideoGame = videoGameService.updateRating(videoGame, 6);
+  expect(updateVideoGame.rating).toBe(videoGame.rating);
+  expect(updateVideoGame).toBeTruthy();
 });
 
 it('Video Game ID Update', () => {

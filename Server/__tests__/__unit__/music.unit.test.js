@@ -47,11 +47,11 @@ it('Music Rating Update -- Error', () => {
     genre: "R&B",
     label: "Unknown Label",
     version: "Vinyl",
-    year: "2017"
+    year: 2017
   });
-  const updateMusic = musicService.updateRating(music, 5);
-  expect(updateMusic).toBeNull();
-});
+  const updateMusic = musicService.updateRating(music, 6);
+  expect(updateMusic.rating).toBe(music.rating);
+  expect(updateMusic).toBeTruthy();});
 
 it('Music ID Update', () => {
   const music = musicService.createMusic({

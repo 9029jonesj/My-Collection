@@ -55,7 +55,7 @@ export const createFilm = (filmFields: FilmFields): ? Film => {
 };
 
 export const updateRating = (film: Film, rating: number): Film =>
-  validators.isObject(film) ?
+  validators.isObject(film) && validators.withinRange(rating) ?
   Object.freeze({
     ...film,
     rating
