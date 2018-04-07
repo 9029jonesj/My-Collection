@@ -1,21 +1,18 @@
-"use strict";
+const express = require("express"),
+  app = express(),
+  passport = require("passport"),
+  GoogleStrategy = require("passport-google-oauth20").Strategy,
+  config = require("./config/public"),
+  keys = require("./config/private");
 
-import * as Hapi from "hapi";
-import * as config from "./config";
+passport.use(
+  new GoogleStrategy({
+    clientID: keys.googleClientID,
+    clientSecret: keys.googleClientSecret,
+    callbackURL: config.google.googleCallbackURL
+  }, (accessToken) => {
+    console.log(accessToken);
+  })
+);
 
-const server = Hapi.server({
-  port: config.server.PORT,
-  host: config.server.HOST
-});
-
-const init = async () => {
-  await server.start();
-  console.log(`Server running at: ${server.info.uri}`);
-};
-
-process.on("unhandledRejection", err => {
-  console.log(err);
-  process.exit(1);
-});
-
-init();
+app.listen(config.server.PORT);
