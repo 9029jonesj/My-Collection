@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "start": "babel-node --presets env app.js",
+    "dev": "nodemon --exec npm start",
     "typed": "flow-typed install",
     "flow:precommit": "flow; test $? -eq 1 -o $? -eq 2 && exit 1 || exit 0",
     "test": "jest --runInBand --coverage --no-cache --forceExit"
@@ -68,5 +69,9 @@
     "react-native-fabric": "^0.5.1",
     "react-scripts": "^1.1.1",
     "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3",
+    "npm-cli": "^0.1.0"
   }
 }
