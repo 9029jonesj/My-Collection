@@ -1,5 +1,9 @@
-/Server/node_modules/
-/Server/__coverage__/
-/Server/coverage/
-/Server/flow-typed/
-/Server/config/private.js
+node_modules/
+__coverage__/
+coverage/
+flow-typed/
+Desktop/
+*.key
+*.crt
+dev.js
+*.log

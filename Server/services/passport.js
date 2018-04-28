@@ -2,21 +2,38 @@ const passport = require("passport"),
   GoogleStrategy = require("passport-google-oauth20").Strategy,
   FacebookStrategy = require("passport-facebook").Strategy,
   TwitterStrategy = require("passport-twitter").Strategy,
-  keys = require("../config/private"),
-  config = require("../config/public");
+  keys = require("../config/keys"),
+  mongoose = require("mongoose"),
+  User = mongoose.model("users");
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id).then(user => {
+    done(null, user);
+  });
+});
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: keys.google.clientID,
       clientSecret: keys.google.clientSecret,
-      callbackURL: config.google.googleCallbackURL
+      callbackURL: "/auth/google/callback",
+      proxy: true
     },
-    (accessToken, refreshToken, profile, callback) => {
-      console.log("Access Token: " + accessToken);
-      console.log("Refresh Token: " + refreshToken);
-      console.log("Profile: " + JSON.stringify(profile));
-      return callback(null, profile);
+    (accessToken, refreshToken, profile, done) => {
+      User.findOne({email: profile.emails[0].value}).then(existingUser => {
+        if (!existingUser) {
+          new User({ID: profile.id, email: profile.emails[0].value})
+            .save()
+            .then(user => {
+              done(null, user);
+            });
+        } else done(null, existingUser);
+      });
     }
   )
 );
@@ -26,10 +43,20 @@ passport.use(
     {
       clientID: keys.facebook.clientID,
       clientSecret: keys.facebook.clientSecret,
-      callbackURL: config.facebook.facebookCallbackURL
+      callbackURL: "/auth/facebook/callback",
+      profileFields: ["id", "email"],
+      proxy: true
     },
-    function(accessToken, refreshToken, profile, callback) {
-      return callback(null, profile);
+    (accessToken, refreshToken, profile, done) => {
+      User.findOne({email: profile.emails[0].value}).then(existingUser => {
+        if (!existingUser) {
+          new User({ID: profile.id, email: profile.emails[0].value})
+            .save()
+            .then(user => {
+              done(null, user);
+            });
+        } else done(null, existingUser);
+      });
     }
   )
 );
@@ -39,10 +66,19 @@ passport.use(
     {
       consumerKey: keys.twitter.consumerKey,
       consumerSecret: keys.twitter.consumerSecret,
-      callbackURL: config.twitter.twitterCallbackURL
+      callbackURL: "/auth/twitter/callback",
+      includeEmail: true
     },
-    function(token, tokenSecret, profile, cb) {
-      return callback(null, profile);
+    (token, tokenSecret, profile, done) => {
+      User.findOne({email: profile.emails[0].value}).then(existingUser => {
+        if (!existingUser) {
+          new User({ID: profile.id, email: profile.emails[0].value})
+            .save()
+            .then(user => {
+              done(null, user);
+            });
+        } else done(null, existingUser);
+      });
     }
   )
 );
