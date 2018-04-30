@@ -6,7 +6,9 @@
   "private": true,
   "scripts": {
     "start": "babel-node --presets env app.js",
-    "dev": "nodemon --exec npm start",
+    "client": "npm run start --prefix client",
+    "server": "nodemon --exec npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "typed": "flow-typed install",
     "flow:precommit": "flow; test $? -eq 1 -o $? -eq 2 && exit 1 || exit 0",
     "test": "jest --runInBand --coverage --no-cache --forceExit"
@@ -76,6 +78,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "concurrently": "^3.5.1",
     "nodemon": "^1.17.3",
     "npm-cli": "^0.1.0"
   }
