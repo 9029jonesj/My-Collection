@@ -10,10 +10,9 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id).then(user => {
-    done(null, user);
-  });
+passport.deserializeUser(async (id, done) => {
+  const user = await User.findById(id);
+  done(null, user);
 });
 
 passport.use(
@@ -25,14 +24,8 @@ passport.use(
       proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
-      User.findOne({email: profile.emails[0].value}).then(existingUser => {
-        if (!existingUser) {
-          new User({ID: profile.id, email: profile.emails[0].value})
-            .save()
-            .then(user => {
-              done(null, user);
-            });
-        } else done(null, existingUser);
+      checkUser(profile, user => {
+        done(null, user);
       });
     }
   )
@@ -48,14 +41,8 @@ passport.use(
       proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
-      User.findOne({email: profile.emails[0].value}).then(existingUser => {
-        if (!existingUser) {
-          new User({ID: profile.id, email: profile.emails[0].value})
-            .save()
-            .then(user => {
-              done(null, user);
-            });
-        } else done(null, existingUser);
+      checkUser(profile, user => {
+        done(null, user);
       });
     }
   )
@@ -70,15 +57,21 @@ passport.use(
       includeEmail: true
     },
     (token, tokenSecret, profile, done) => {
-      User.findOne({email: profile.emails[0].value}).then(existingUser => {
-        if (!existingUser) {
-          new User({ID: profile.id, email: profile.emails[0].value})
-            .save()
-            .then(user => {
-              done(null, user);
-            });
-        } else done(null, existingUser);
+      checkUser(profile, user => {
+        done(null, user);
       });
     }
   )
 );
+
+const checkUser = async (profile, callback) => {
+  const existingUser = await User.findOne({email: profile.emails[0].value});
+  if (!existingUser) {
+    const user = await new User({
+      ID: profile.id,
+      email: profile.emails[0].value
+    }).save();
+    callback(user);
+  }
+  callback(existingUser);
+};
